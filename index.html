@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script>
+        /*пишем тетрис на чистом js*/
+        var fig;
+        var s =[];
+            s[0] = "1100.0110.0000.0000"+".c";;
+            s[1] = "1100.1100.0000.0000";
+            s[2] = "1000.1110.0000.0000"+".r";
+            s[3] = "0010.1110.0000.0000"+".o";
+            s[4] = "0110.1100.0000.0000"+".m";
+            s[5] = "0100.1110.0000.0000"+".e";
+            s[6] = "1100.0110.0000.0000"+".c";
+            s[7] = "1000.1000.1000.1000"+".a";
+            s[8] = "1111.0000.0000.0000"+".b";
+            s[9] = "0100.1100.1000.0000"+".d";
+            s[10] = "1000.1100.1000.0000"+".f";
+            s[11] = "1000.1100.0100.0000"+".n";
+            s[12] = "1000.1000.1100.0000"+".k";
+            s[13] = "1100.1000.1000.0000"+".t";
+            
+            function begin() {
+                var elem = document.getElementsByClassName("bl");
+                var nons = elem[3].getElementsByClassName("brick non");
+                var elems = document.getElementsByClassName("brick"); //массиы всех кубиков
+                var lin =0;
+                var lines = [];
+                    if (nons.length>0) {
+                        alert("END");
+                        return;
+                    }   
+                    lines=chose().split(".");
+                    fig=lines;
+                        for (var i=0; i<4; i++) {
+                            for (var j=0; j<4; j++)
+                                if (lines[i].charAt(j)!="0") {
+                                    elems[5+j+lin].className+=" active";
+                                }
+                        lin+=13;
+                        }  move();
+            }
+            
+            function move() {    
+                var elems = document.getElementsByClassName("brick"); 
+                function frame() { // функция для отрисовки
+                    lineCheck();
+                    for (var i =elems.length-1; i>=0; i--) {
+                        if (elems[i].className=="brick active") {
+                            elems[i+13].className="brick active";
+                            elems[i].className="brick";
+                        }                       
+                    } check();
+                }
+                window.timer = setInterval(frame, 200) 
+            }
+            
+            function chose() { 
+                    var chos = ~~(Math.random()*9);
+                    return s[chos];
+            }
+            
+            function draw(lines) {
+                var elems = document.getElementsByClassName("brick"); //массиы всех кубиков
+                    for (var k=0; k<elems.length; k++)
+                        if (elems[k].className == "brick active") { break;}           
+                            for (var p=0; p<elems.length; p++)
+                                if (elems[p].className == "brick active") {
+                                    elems[p].className="brick";
+                                }
+                        var lin =13*elems[k].parentNode.getAttribute("data-y");
+                            for (var i=0; i<4; i++) {
+                                for (var j=0; j<4; j++)
+                                    if (lines[i].charAt(j)!="0") {
+                                        elems[j+lin+1*elems[k].getAttribute("data-x")].className+=" active";
+                                    }
+                                lin+=13;
+                            }
+            }
+            
+        window.onkeydown= function start() { /*действия при нажатии клавиши*/
+            var elems = document.getElementsByClassName("brick"); /*получаем массив всех элементов с className brick*/
+            if (event.keyCode == 65) {
+                var elems = document.getElementsByClassName("brick"); /*массив всех кубиков*/
+                alert(elems.length);
+            }
+                if (event.keyCode == 38) { /*если нажали клавишу вверх*/
+                    if (fig[4][0]=="a") {         
+                        var lines = [];
+                            lines=s[8].split(".");
+                            fig = lines;
+                            draw(lines);              
+                    }
+                
+                    else if (fig[4][0]=="b") {         
+                        var lines = [];
+                            lines=s[7].split(".");
+                            fig = lines;
+                            draw(lines);
+                    }
+                    
+                     else if (fig[4][0]=="c") {         
+                        var lines = [];
+                            lines=s[9].split(".");
+                            fig = lines;
+                            draw(lines);
+                    }
+                    else if (fig[4][0]=="d") {         
+                        var lines = [];
+                            lines=s[6].split(".");
+                            fig = lines;
+                            draw(lines);
+                    }
+                     else if (fig[4][0]=="e") {         
+                        var lines = [];
+                            lines=s[10].split(".");
+                            fig = lines;
+                            draw(lines);
+                    }
+                      else if (fig[4][0]=="f") {         
+                        var lines = [];
+                            lines=s[5].split(".");
+                            fig = lines;
+                            draw(lines);
+                    }
+                    else if (fig[4][0]=="m") {         
+                        var lines = [];
+                            lines=s[11].split(".");
+                            fig = lines;
+                            draw(lines);
+                    }
+                    else if (fig[4][0]=="n") {         
+                        var lines = [];
+                            lines=s[4].split(".");
+                            fig = lines;
+                            draw(lines);
+                    }
+                     else if (fig[4][0]=="o") {         
+                        var lines = [];
+                            lines=s[12].split(".");
+                            fig = lines;
+                            draw(lines);
+                    }
+                     else if (fig[4][0]=="k") {         
+                        var lines = [];
+                            lines=s[3].split(".");
+                            fig = lines;
+                            draw(lines);
+                    }
+                    else if (fig[4][0]=="r") {         
+                        var lines = [];
+                            lines=s[13].split(".");
+                            fig = lines;
+                            draw(lines);
+                    }
+                      else if (fig[4][0]=="t") {         
+                        var lines = [];
+                            lines=s[2].split(".");
+                            fig = lines;
+                            draw(lines);
+                    } 
+                }
+               
+                for (var i =elems.length-1; i>=0; i--){ /*берем все блоки начиная с конца*/
+                    elems = document.getElementsByClassName("brick");
+                    if (elems[i].className=="brick active") { /*если взяли активный*/
+                       
+                        if (event.keyCode == 39) { /*и нажали клавишу вправо*/
+                            if(elems[i+1].className=="brick non" || elems[i+1+13].className=="brick non" ) return;
+                            elems[i].className="brick"; /*текущий блок прячем*/
+                           
+                            elems[i+1].className="brick active"; /*делаем активным блок справа*/
+                        }
+                    } check();} /*закрытие первого цикла, проверяем не нужно ли остановить кубики*/
+                for ( i =0; i<elems.length; i++) /*второй цикл для движения влево, теперь проходим слева на право*/
+                    if (elems[i].className=="brick active") {
+                        if (event.keyCode == 37) {
+                            if(elems[i-1].className=="brick non" || elems[i-1+13].className=="brick non" ) return;
+                            elems[i-1].className="brick active";
+                            elems[i].className="brick";     
+                        }         
+                    } check();
+        }
+        
+        function pausecomp(millis)
+ {
+  var date = new Date();
+  var curDate = null;
+  do { curDate = new Date(); }
+  while(curDate-date < millis);
+}
+        
+        function chg(d1,d2){
+	var d11=d1.cloneNode(true);
+	var d22=d2.cloneNode(true);
+	d2.parentNode.insertBefore(d11,d2);
+	d1.parentNode.insertBefore(d22,d1);
+	d1.parentNode.removeChild(d1);
+	d2.parentNode.removeChild(d2);
+}
+                     
+                             
+            function lineCheck() {
+                var elems = document.getElementsByClassName("bl");
+                    for (var j=0; j<elems.length; j++) {
+                    var nons = elems[j].getElementsByClassName("brick non");
+                    if (nons.length == 13) {
+                        for (var i=nons.length-1; i >=0; i--)
+                            nons[i].className="brick";
+                             var d11=elems[j].cloneNode(true);
+                            d11.setAttribute("data-y","1");
+                            d22=elems[0];
+                             document.getElementById("basket").removeChild(elems[j]);
+                            document.getElementById("basket").insertBefore(d11,d22);
+                            var new1 = document.getElementsByClassName("bl");
+                            for (var p=0;p<elems.length; p++) {
+                                elems[p].setAttribute("data-y", p+1);
+                            }
+                        document.getElementById("score").innerHTML =1*document.getElementById("score").innerHTML+ 20;
+                        nons1 = document.getElementsByClassName("brick");
+                        /*
+                        for (i=j-1; i>=0; i--) {
+                            non=elems[j].getElementsByClassName("brick non");
+                            for (var k =1; k<13; k++) {
+                                nons[1*elems[j].getAttribute("data-y")*13-26+k].className="brick";
+                              nons1[1*elems[j].getAttribute("data-y")*13-26+k+13].className="brick non";  
+                            }
+                        }
+                       /* 
+                        for (i =nons.length-1; i>=0; i--) {
+                            if (nons[i].className == "brick non") {        
+                                nons[i+13].className="brick non";
+                                nons[i].className="brick";
+                                
+                            }
+                        } */      
+                    }
+                    }        
+            }
+            
+            function reset() { /*очищаем поле*/
+                 document.getElementById("score").innerHTML =0;
+                var elems = document.getElementsByClassName("brick non");
+                var elems1 = document.getElementsByClassName("brick active");
+                for (var i = elems.length-1; i>=0; i--)
+                    elems[i].className="brick";
+                for (var i = elems1.length-1; i>=0; i--)
+                    elems1[i].className="brick";
+                    clearInterval(timer);
+            }
+                
+            function check() { /*проверка на остановку*/
+                var elems = document.getElementsByClassName("brick"); /*массив всех кубиков*/
+                for (var i =0; i<elems.length; i++) /*проходим его*/
+                    if (elems[i].className=="brick active" && (elems[i].parentNode.getAttribute("data-y")==18 || elems[i+13].className =="brick non") ) {   
+                        for (var k =0; k<elems.length; k++) {
+                            if (elems[k].className=="brick active"){  elems[k].className="brick non";  } 
+                        }
+                        clearInterval(timer); 
+                        begin();   
+                    }
+                }           
+    </script>
+</head>
+<body>
+    <div class="wrap">
+        <div class = "text">
+            <label id = "score" >0</label>
+        </div>
+        <div class="but1">
+            <a class="btn but pull-right" onclick="reset()" href="#"><span>Заново</span></a>
+        <a class="btn but pull-right" onclick="begin()" href="#"><span>Начать</span></a>
+        
+        </div>
+        <div id="basket">
+            <div data-y="1" class="bl">
+                <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+             <div data-y="2" class="bl">
+                <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+              <div data-y="3" class="bl">
+                <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+               <div data-y="4" class="bl">
+                <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+                <div data-y="5" class="bl">
+                <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+                 <div data-y="6" class="bl">
+                <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+                  <div data-y="7" class="bl">
+               <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+                   <div data-y="8" class="bl">
+                <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+                    <div data-y="9" class="bl">
+                <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+                     <div data-y="10" class="bl">
+                <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+                      <div data-y="11" class="bl">
+                <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+                      <div data-y="12" class="bl">
+                <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+                        <div data-y="13" class="bl">
+                <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+                         <div data-y="14" class="bl">
+                <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+                          <div data-y="15" class="bl">
+               <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+                         <div data-y="16" class="bl">
+                <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+                </div>
+                           <div data-y="17" class="bl">
+                <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+                    <div data-y="18" class="bl">
+                <div class="brick" data-x="1"></div>
+                <div class="brick" data-x="2"></div>
+                <div class="brick" data-x="3"></div>
+                <div class="brick" data-x="4"></div>
+                <div class="brick" data-x="5"></div>
+                <div class="brick" data-x="6"></div>
+                <div class="brick" data-x="7"></div>
+                <div class="brick" data-x="8"></div>
+                <div class="brick" data-x="9"></div>
+                <div class="brick" data-x="10"></div>
+                <div class="brick" data-x="11"></div>
+                <div class="brick" data-x="12"></div>
+                <div class="brick" data-x="13"></div>
+            </div>
+        </div>              
+    </div>
+</body>
+</html>
